@@ -16,6 +16,7 @@ import { Supplementary } from "@/models/supplementary";
 import { uid } from "@/base/misc";
 import { constructFileURL } from "@/base/url";
 import { getPublicationString } from "@/base/string";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const props = defineProps({
   entity: {
@@ -247,7 +248,7 @@ onUpdated(() => {
     @drop.prevent="onDragCancelled"
   >
     <div class="flex flex-col grow overflow-auto">
-      <div class="text-md font-bold" v-html="reanderedTitle"></div>
+      <div class="text-md font-bold" v-html="sanitizeHTML(reanderedTitle)"></div>
       <Section :title="$t('mainview.authors')">
         <Authors :authors="entity.authors" />
       </Section>
@@ -269,7 +270,7 @@ onUpdated(() => {
         v-for="[id, item] of Object.entries(slot1)"
         :title="item.title"
       >
-        <div class="text-xxs" v-html="item.content">
+        <div class="text-xxs" v-html="sanitizeHTML(item.content)">
         </div>
       </Section>
 
@@ -315,7 +316,7 @@ onUpdated(() => {
         v-for="[id, item] of Object.entries(slot2)"
         :title="item.title"
       >
-        <div class="text-xxs" v-html="item.content">
+        <div class="text-xxs" v-html="sanitizeHTML(item.content)">
         </div>
       </Section>
 
@@ -350,7 +351,7 @@ onUpdated(() => {
         v-for="[id, item] of Object.entries(slot3)"
         :title="item.title"
       >
-        <div class="text-xxs" v-html="item.content">
+        <div class="text-xxs" v-html="sanitizeHTML(item.content)">
         </div>
       </Section>
     </div>

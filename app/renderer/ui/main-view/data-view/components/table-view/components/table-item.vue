@@ -19,6 +19,7 @@ import {
 } from "@/base/string";
 import { FieldTemplate, ItemField } from "@/renderer/types/data-view";
 import { Entity } from "@/models/entity";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const props = defineProps({
   item: {
@@ -150,12 +151,12 @@ const emits = defineEmits(["event:click-candidate-btn"]);
         v-else-if="field.type === 'string' && field.highlightable"
         :query="queryHighlight"
         highlight-class="bg-yellow-300 rounded-sm px-0.5"
-        :text-to-highlight="field.value"
+        :text-to-highlight="sanitizeHTML(field.value)"
         :split-by-space="true"
       />
       <span
         class="my-auto truncate"
-        v-html="field.value"
+        v-html="sanitizeHTML(field.value)"
         v-else-if="field.type === 'html' && !field.highlightable"
       ></span>
       <WordHighlighter
@@ -163,7 +164,7 @@ const emits = defineEmits(["event:click-candidate-btn"]);
         v-else-if="field.type === 'html' && field.highlightable"
         :query="queryHighlight"
         highlight-class="bg-yellow-300 rounded-sm px-0.5"
-        :html-to-highlight="field.value"
+        :html-to-highlight="sanitizeHTML(field.value)"
         :split-by-space="true"
       />
       <span class="my-auto" v-else-if="field.type === 'flag'">
@@ -206,7 +207,7 @@ const emits = defineEmits(["event:click-candidate-btn"]);
           :class="active ? 'bg-red-400' : 'bg-red-500 '"
           v-if="!read"
         />
-        <span class="my-auto truncate" v-html="field.value"> </span>
+        <span class="my-auto truncate" v-html="sanitizeHTML(field.value)"> </span>
       </span>
       <span class="my-auto truncate" v-else>
         {{ field.value }}

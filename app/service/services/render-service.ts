@@ -8,6 +8,13 @@ import { errorcatching } from "@/base/error";
 import { createDecorator } from "@/base/injection/injection";
 import { eraseProtocol } from "@/base/url";
 
+import createDOMPurify from "dompurify";
+
+const domPurifyInstance =
+  typeof (globalThis as any).window !== "undefined"
+    ? createDOMPurify((globalThis as any).window)
+    : null;
+
 export const IRenderService = createDecorator("renderService");
 
 export class RenderService {
@@ -64,8 +71,14 @@ export class RenderService {
       overflow = false;
       renderContent = content;
     }
+    const rawHtml = this._markdownIt.render(renderContent);
+    const cleanHtml =
+      domPurifyInstance?.sanitize(rawHtml, {
+        ADD_TAGS: ["math", "semantics", "mrow", "mi", "mo", "mn", "msup", "mfrac"],
+        ADD_ATTR: ["xmlns", "class"],
+      }) ?? rawHtml;
     return {
-      renderedStr: this._markdownIt.render(renderContent),
+      renderedStr: cleanHtml,
       overflow: overflow,
     };
   }

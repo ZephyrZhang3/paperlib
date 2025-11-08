@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
+
 // ======================
 // State
 // ======================
@@ -12,6 +14,7 @@ const onClick = () => {
     overlayNoticationShown: false,
   });
 };
+
 </script>
 
 <template>
@@ -35,7 +38,7 @@ const onClick = () => {
               <div class="bg-accentlight rounded-md w-1 h-4 my-auto"></div>
               <div class="font-semibold my-auto">{{ notification.title }}</div>
             </div>
-            <div class="pl-3 text-sm" v-html="notification.content"></div>
+            <div class="pl-3 text-sm" v-html="sanitizeHTML(notification.content)"></div>
           </div>
         </div>
         <div

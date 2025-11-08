@@ -2,6 +2,7 @@
 import { BIconArrowsCollapse, BIconArrowsExpand } from "bootstrap-icons-vue";
 import { watch } from "vue";
 import { onMounted, onUpdated, ref } from "vue";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const props = defineProps({
   title: {
@@ -98,7 +99,7 @@ watch(
       id="detail-markdown-preview"
       class="text-xs pr-2 overflow-hidden break-words"
       :class="isExpanded ? '' : 'max-h-96'"
-      v-html="renderedHTML"
+      v-html="sanitizeHTML(renderedHTML)"
       ref="markdownArea"
     ></div>
     <div class="text-xs" v-if="isOverflow">...</div>

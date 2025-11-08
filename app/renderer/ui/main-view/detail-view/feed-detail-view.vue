@@ -8,6 +8,7 @@ import Spinner from "../../components/spinner.vue";
 import Authors from "./components/authors.vue";
 import PubDetails from "./components/pub-details.vue";
 import Section from "./components/section.vue";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const props = defineProps({
   entity: {
@@ -114,7 +115,7 @@ onUpdated(() => {
         <span class="my-auto text-xs select-none">Added</span>
       </div>
     </div>
-    <div class="text-md font-bold" v-html="reanderedTitle"></div>
+    <div class="text-md font-bold" v-html="sanitizeHTML(reanderedTitle)"></div>
 
     <Section title="Feed Name">
       <div class="text-xxs">
@@ -143,7 +144,7 @@ onUpdated(() => {
       </div>
     </Section>
     <Section title="Abstract" v-if="entity.abstract" class="pr-3">
-      <div class="text-xxs text-justify" v-html="reanderedAbstract"></div>
+      <div class="text-xxs text-justify" v-html="sanitizeHTML(reanderedAbstract)"></div>
     </Section>
     <div class="w-40 h-10">&nbsp;</div>
     <div

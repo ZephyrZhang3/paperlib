@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import WhatsNewHeader from "./header.vue";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const preState = PLMainAPI.preferenceService.useState();
 
@@ -106,7 +107,7 @@ onMounted(async () => {
         {{ `${$t("mainview.whatsnew")} ${currentVersion}` }}
       </p>
 
-      <div id="release-note" class="mb-5" v-html="currentReleaseNoteHTML" />
+      <div id="release-note" class="mb-5" v-html="sanitizeHTML(currentReleaseNoteHTML)" />
       <div
         id="whats-new-close-btn"
         class="mt-10 mx-auto flex w-60 h-10 bg-accentlight dark:bg-accentdark text-neutral-50 rounded-md shadow-md cursor-pointer"
@@ -122,7 +123,7 @@ onMounted(async () => {
       <div
         id="history-release-note"
         class="px-5 text-sm"
-        v-html="historyReleaseNoteHTML"
+        v-html="sanitizeHTML(historyReleaseNoteHTML)"
       ></div>
 
       <div class="w-full h-20"></div>

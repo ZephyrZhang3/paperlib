@@ -13,6 +13,7 @@ import { computedAsync } from "@vueuse/core";
 import { getCategorizerString, getPubTypeString } from "@/base/string";
 import { Entity } from "@/models/entity";
 import { getPublicationString } from "@/base/string";
+import { sanitizeHTML } from "@/renderer/utils/sanitize";
 
 const props = defineProps({
   item: {
@@ -108,7 +109,7 @@ scp {
         <WordHighlighter
           :query="queryHighlight"
           highlight-class="bg-yellow-300 rounded-sm px-0.5"
-          :html-to-highlight="renderedTitle"
+          :html-to-highlight="sanitizeHTML(renderedTitle)"
           :split-by-space="true"
         >
         </WordHighlighter>
